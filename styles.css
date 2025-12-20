@@ -70,7 +70,7 @@ body {
     max-width: 1400px;
     margin: 0 auto;
     min-height: 100vh;
-    gap: 0;
+    gap: 80px; /* Grand écart entre profil et cartes */
 }
 
 /* Profile Sidebar */
@@ -168,7 +168,7 @@ body {
    MAIN CONTENT
    ======================================== */
 .bento-main {
-    padding: var(--space-4xl) var(--space-3xl) var(--space-4xl) var(--space-xl);
+    padding: var(--space-4xl) var(--space-4xl) var(--space-4xl) 0;
 }
 
 .bento-section {
@@ -682,6 +682,7 @@ body {
 @media (max-width: 900px) {
     .bento-container {
         grid-template-columns: 1fr;
+        gap: 0;
     }
 
     .profile-section {
