@@ -70,7 +70,7 @@ body {
     max-width: 1400px;
     margin: 0 auto;
     min-height: 100vh;
-    gap: 80px; /* Grand écart entre profil et cartes */
+    gap: 140px; /* Grand écart entre profil et cartes comme bento.me */
 }
 
 /* Profile Sidebar */
