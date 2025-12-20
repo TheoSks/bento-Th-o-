@@ -9,19 +9,41 @@
     box-sizing: border-box;
 }
 
-/* Variables - Bento.me exact colors */
+/* Variables - Bento.me exact spacing & colors */
 :root {
+    /* Colors */
     --bg: #f5f5f7;
     --card-bg: #ffffff;
     --text-primary: #1d1d1f;
     --text-secondary: #86868b;
     --text-muted: #aeaeb2;
-    --border: rgba(0, 0, 0, 0.04);
-    --radius: 24px;
-    --radius-sm: 16px;
-    --radius-xs: 10px;
-    --shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
-    --shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.08);
+    --border: rgba(0, 0, 0, 0.06);
+
+    /* Spacing - Bento.me values */
+    --space-xs: 4px;
+    --space-sm: 8px;
+    --space-md: 12px;
+    --space-lg: 16px;
+    --space-xl: 20px;
+    --space-2xl: 24px;
+    --space-3xl: 32px;
+    --space-4xl: 40px;
+
+    /* Card gap */
+    --card-gap: 12px;
+    --card-padding: 18px;
+    --section-gap: 24px;
+
+    /* Radius */
+    --radius: 20px;
+    --radius-sm: 14px;
+    --radius-xs: 8px;
+
+    /* Shadows */
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+    --shadow-hover: 0 4px 20px rgba(0, 0, 0, 0.08);
+
+    /* Misc */
     --transition: 0.2s ease;
     --linkedin: #0a66c2;
     --behance: #1769ff;
@@ -44,10 +66,11 @@ body {
    ======================================== */
 .bento-container {
     display: grid;
-    grid-template-columns: 300px 1fr;
+    grid-template-columns: 280px 1fr;
     max-width: 1400px;
     margin: 0 auto;
     min-height: 100vh;
+    gap: 0;
 }
 
 /* Profile Sidebar */
@@ -55,7 +78,7 @@ body {
     position: sticky;
     top: 0;
     height: 100vh;
-    padding: 48px 32px;
+    padding: var(--space-4xl) var(--space-2xl);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -66,9 +89,9 @@ body {
 }
 
 .avatar-container {
-    width: 130px;
-    height: 130px;
-    margin: 0 auto 20px;
+    width: 120px;
+    height: 120px;
+    margin: 0 auto var(--space-lg);
     border-radius: 50%;
     overflow: hidden;
     background: #e8e8ed;
@@ -87,22 +110,24 @@ body {
 }
 
 .name {
-    font-size: 1.75rem;
+    font-size: 1.625rem;
     font-weight: 700;
-    letter-spacing: -0.5px;
-    margin-bottom: 8px;
+    letter-spacing: -0.3px;
+    margin-bottom: var(--space-sm);
+    line-height: 1.2;
 }
 
 .title {
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     color: var(--text-secondary);
     line-height: 1.5;
+    padding: 0 var(--space-sm);
 }
 
 .profile-footer {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: var(--space-sm);
 }
 
 .btn-login {
@@ -143,24 +168,25 @@ body {
    MAIN CONTENT
    ======================================== */
 .bento-main {
-    padding: 48px 48px 48px 24px;
+    padding: var(--space-4xl) var(--space-3xl) var(--space-4xl) var(--space-xl);
 }
 
 .bento-section {
-    margin-bottom: 32px;
+    margin-bottom: var(--section-gap);
 }
 
 .section-label {
-    font-size: 1rem;
+    font-size: 0.938rem;
     font-weight: 600;
     color: var(--text-primary);
-    margin-bottom: 16px;
+    margin-bottom: var(--space-md);
+    letter-spacing: -0.1px;
 }
 
 /* Cards Row */
 .cards-row {
     display: flex;
-    gap: 16px;
+    gap: var(--card-gap);
 }
 
 /* ========================================
@@ -170,7 +196,7 @@ body {
     background: var(--card-bg);
     border-radius: var(--radius);
     border: 1px solid var(--border);
-    padding: 20px;
+    padding: var(--card-padding);
     transition: transform var(--transition), box-shadow var(--transition);
     cursor: pointer;
     text-decoration: none;
@@ -186,8 +212,8 @@ body {
    LINKEDIN CARD
    ======================================== */
 .card-linkedin {
-    width: 260px;
-    min-height: 200px;
+    width: 240px;
+    min-height: 190px;
     display: flex;
     flex-direction: column;
 }
@@ -196,12 +222,11 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    margin-bottom: auto;
 }
 
 .linkedin-icon {
-    width: 44px;
-    height: 44px;
+    width: 40px;
+    height: 40px;
     background: var(--linkedin);
     border-radius: var(--radius-xs);
     display: flex;
@@ -210,8 +235,8 @@ body {
 }
 
 .linkedin-avatar {
-    width: 90px;
-    height: 90px;
+    width: 80px;
+    height: 80px;
     border-radius: var(--radius-sm);
     overflow: hidden;
 }
@@ -223,18 +248,20 @@ body {
 }
 
 .card-bottom {
-    margin-top: 16px;
+    margin-top: auto;
+    padding-top: var(--space-md);
 }
 
 .link-title {
     display: block;
-    font-size: 0.95rem;
+    font-size: 0.875rem;
     font-weight: 600;
     color: var(--text-primary);
+    margin-bottom: 2px;
 }
 
 .link-domain {
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     color: var(--text-muted);
 }
 
@@ -243,7 +270,7 @@ body {
    ======================================== */
 .card-figma {
     flex: 1;
-    min-height: 200px;
+    min-height: 190px;
     display: flex;
     flex-direction: column;
 }
@@ -251,13 +278,13 @@ body {
 .figma-top {
     display: flex;
     align-items: center;
-    gap: 12px;
-    margin-bottom: 16px;
+    gap: var(--space-md);
+    margin-bottom: var(--space-md);
 }
 
 .figma-icon {
-    width: 36px;
-    height: 36px;
+    width: 32px;
+    height: 32px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -266,15 +293,16 @@ body {
 .figma-meta {
     display: flex;
     flex-direction: column;
+    gap: 2px;
 }
 
 .figma-title {
     font-weight: 600;
-    font-size: 0.95rem;
+    font-size: 0.875rem;
 }
 
 .figma-handle {
-    font-size: 0.8rem;
+    font-size: 0.75rem;
     color: var(--text-muted);
 }
 
@@ -282,27 +310,27 @@ body {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(2, 1fr);
-    gap: 8px;
+    gap: var(--space-sm);
     flex: 1;
-    margin-bottom: 16px;
+    margin-bottom: var(--space-md);
 }
 
 .figma-placeholder {
     background: var(--bg);
     border-radius: var(--radius-xs);
-    min-height: 50px;
+    min-height: 44px;
 }
 
 .btn-follow {
     display: inline-flex;
     align-items: center;
-    gap: 6px;
-    padding: 10px 20px;
+    gap: var(--space-sm);
+    padding: var(--space-sm) var(--space-lg);
     background: var(--linkedin);
     color: white;
     border: none;
     border-radius: var(--radius-xs);
-    font-size: 0.9rem;
+    font-size: 0.813rem;
     font-weight: 600;
     cursor: pointer;
     text-decoration: none;
@@ -325,13 +353,13 @@ body {
 .behance-top {
     display: flex;
     align-items: center;
-    gap: 12px;
-    margin-bottom: 16px;
+    gap: var(--space-md);
+    margin-bottom: var(--space-lg);
 }
 
 .behance-icon {
-    width: 44px;
-    height: 44px;
+    width: 40px;
+    height: 40px;
     background: var(--behance);
     border-radius: var(--radius-xs);
     display: flex;
@@ -341,7 +369,7 @@ body {
 
 .behance-title {
     font-weight: 600;
-    font-size: 1rem;
+    font-size: 0.938rem;
     flex: 1;
 }
 
@@ -351,17 +379,17 @@ body {
 
 .follow-badge {
     background: rgba(255, 255, 255, 0.25);
-    padding: 2px 8px;
-    border-radius: 4px;
-    font-size: 0.8rem;
+    padding: 2px var(--space-sm);
+    border-radius: var(--space-xs);
+    font-size: 0.75rem;
 }
 
 .behance-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(2, 1fr);
-    gap: 10px;
-    height: 180px;
+    gap: var(--space-sm);
+    height: 160px;
 }
 
 .behance-thumb {
@@ -373,7 +401,7 @@ body {
 }
 
 .behance-thumb:hover {
-    transform: scale(1.03);
+    transform: scale(1.02);
 }
 
 /* ========================================
@@ -382,26 +410,26 @@ body {
 .cards-design {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 16px;
+    gap: var(--card-gap);
 }
 
 /* Portfolio Card */
 .card-portfolio {
     display: flex;
     flex-direction: column;
-    min-height: 280px;
+    min-height: 260px;
 }
 
 .portfolio-top {
     display: flex;
     align-items: center;
-    gap: 12px;
-    margin-bottom: 16px;
+    gap: var(--space-md);
+    margin-bottom: var(--space-lg);
 }
 
 .portfolio-avatar {
-    width: 40px;
-    height: 40px;
+    width: 36px;
+    height: 36px;
     border-radius: 50%;
     overflow: hidden;
 }
@@ -415,15 +443,16 @@ body {
 .portfolio-meta {
     display: flex;
     flex-direction: column;
+    gap: 2px;
 }
 
 .portfolio-name {
     font-weight: 600;
-    font-size: 0.9rem;
+    font-size: 0.813rem;
 }
 
 .portfolio-url {
-    font-size: 0.8rem;
+    font-size: 0.75rem;
     color: var(--text-muted);
 }
 
@@ -444,14 +473,14 @@ body {
 .browser-bar {
     display: flex;
     align-items: center;
-    gap: 6px;
-    padding: 10px 12px;
+    gap: var(--space-sm);
+    padding: var(--space-sm) var(--space-md);
     background: #e8e8ed;
 }
 
 .dot {
-    width: 10px;
-    height: 10px;
+    width: 8px;
+    height: 8px;
     border-radius: 50%;
 }
 
@@ -462,37 +491,37 @@ body {
 .browser-address {
     flex: 1;
     text-align: center;
-    font-size: 0.7rem;
+    font-size: 0.688rem;
     color: var(--text-muted);
     background: white;
-    padding: 4px 10px;
-    border-radius: 4px;
-    margin-left: 8px;
+    padding: 3px var(--space-sm);
+    border-radius: var(--space-xs);
+    margin-left: var(--space-sm);
 }
 
 .browser-body {
-    padding: 16px;
-    min-height: 100px;
+    padding: var(--space-md);
+    min-height: 90px;
 }
 
 .mock-nav {
-    height: 6px;
+    height: 5px;
     width: 50%;
     background: #e0e0e0;
     border-radius: 3px;
-    margin-bottom: 16px;
+    margin-bottom: var(--space-md);
 }
 
 .mock-content {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: var(--space-sm);
 }
 
 .mock-line {
-    height: 10px;
+    height: 8px;
     background: #e8e8e8;
-    border-radius: 5px;
+    border-radius: 4px;
     width: 70%;
 }
 
@@ -507,18 +536,18 @@ body {
     align-items: flex-end;
     justify-content: center;
     padding: 0;
-    min-height: 280px;
+    min-height: 260px;
     overflow: hidden;
 }
 
 .device-wrapper {
-    width: 85%;
-    transform: translateY(15%);
+    width: 80%;
+    transform: translateY(18%);
     transition: transform var(--transition);
 }
 
 .card-device:hover .device-wrapper {
-    transform: translateY(10%);
+    transform: translateY(12%);
 }
 
 .macbook {
@@ -527,20 +556,20 @@ body {
 
 .macbook-screen {
     background: #2c2c2e;
-    border-radius: 8px 8px 0 0;
-    padding: 6px;
+    border-radius: 6px 6px 0 0;
+    padding: 5px;
     border: 2px solid #48484a;
     border-bottom: none;
 }
 
 .screen-inner {
     background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-    border-radius: 4px;
-    height: 140px;
+    border-radius: 3px;
+    height: 130px;
 }
 
 .macbook-bottom {
-    height: 12px;
+    height: 10px;
     background: linear-gradient(180deg, #48484a 0%, #3a3a3c 100%);
     border-radius: 0 0 2px 2px;
     display: flex;
@@ -549,8 +578,8 @@ body {
 }
 
 .macbook-notch {
-    width: 60px;
-    height: 4px;
+    width: 50px;
+    height: 3px;
     background: #2c2c2e;
     border-radius: 2px;
 }
@@ -561,7 +590,7 @@ body {
 .cards-extra {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 12px;
+    gap: var(--card-gap);
 }
 
 .card-small {
@@ -569,9 +598,9 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 24px 16px;
-    min-height: 100px;
-    gap: 10px;
+    padding: var(--space-xl) var(--space-lg);
+    min-height: 90px;
+    gap: var(--space-sm);
 }
 
 .small-icon {
@@ -584,7 +613,7 @@ body {
 }
 
 .small-label {
-    font-size: 0.85rem;
+    font-size: 0.813rem;
     font-weight: 500;
     color: var(--text-secondary);
 }
@@ -658,11 +687,11 @@ body {
     .profile-section {
         position: relative;
         height: auto;
-        padding: 40px 24px;
+        padding: var(--space-3xl) var(--space-2xl);
     }
 
     .bento-main {
-        padding: 24px;
+        padding: var(--space-2xl);
     }
 
     .cards-row {
@@ -676,26 +705,26 @@ body {
     .behance-grid {
         grid-template-columns: repeat(2, 1fr);
         grid-template-rows: repeat(3, 1fr);
-        height: 240px;
+        height: 220px;
     }
 }
 
 @media (max-width: 600px) {
     .profile-section {
-        padding: 32px 20px;
+        padding: var(--space-2xl) var(--space-lg);
     }
 
     .avatar-container {
-        width: 110px;
-        height: 110px;
+        width: 100px;
+        height: 100px;
     }
 
     .name {
-        font-size: 1.5rem;
+        font-size: 1.375rem;
     }
 
     .bento-main {
-        padding: 16px;
+        padding: var(--space-lg);
     }
 
     .cards-extra {
@@ -703,7 +732,12 @@ body {
     }
 
     .card {
-        padding: 16px;
+        padding: var(--space-lg);
+    }
+
+    .section-label {
+        font-size: 0.875rem;
+        margin-bottom: var(--space-sm);
     }
 }
 
