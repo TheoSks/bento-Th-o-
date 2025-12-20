@@ -29,10 +29,10 @@
     --space-3xl: 32px;
     --space-4xl: 40px;
 
-    /* Card gap */
-    --card-gap: 12px;
-    --card-padding: 18px;
-    --section-gap: 24px;
+    /* Card gap - Bento.me uses larger gaps */
+    --card-gap: 16px;
+    --card-padding: 20px;
+    --section-gap: 40px;
 
     /* Radius */
     --radius: 20px;
@@ -168,18 +168,21 @@ body {
    MAIN CONTENT
    ======================================== */
 .bento-main {
-    padding: var(--space-4xl) var(--space-4xl) var(--space-4xl) 0;
+    padding: 48px 48px 48px 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--section-gap);
 }
 
 .bento-section {
-    margin-bottom: var(--section-gap);
+    /* Gap handled by parent flex */
 }
 
 .section-label {
     font-size: 0.938rem;
     font-weight: 600;
     color: var(--text-primary);
-    margin-bottom: var(--space-md);
+    margin-bottom: var(--space-lg);
     letter-spacing: -0.1px;
 }
 
@@ -212,8 +215,8 @@ body {
    LINKEDIN CARD
    ======================================== */
 .card-linkedin {
-    width: 240px;
-    min-height: 190px;
+    width: 260px;
+    min-height: 210px;
     display: flex;
     flex-direction: column;
 }
@@ -270,7 +273,7 @@ body {
    ======================================== */
 .card-figma {
     flex: 1;
-    min-height: 190px;
+    min-height: 210px;
     display: flex;
     flex-direction: column;
 }
@@ -310,9 +313,9 @@ body {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(2, 1fr);
-    gap: var(--space-sm);
+    gap: var(--space-md);
     flex: 1;
-    margin-bottom: var(--space-md);
+    margin-bottom: var(--space-lg);
 }
 
 .figma-placeholder {
@@ -388,8 +391,8 @@ body {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(2, 1fr);
-    gap: var(--space-sm);
-    height: 160px;
+    gap: var(--space-md);
+    height: 180px;
 }
 
 .behance-thumb {
@@ -417,7 +420,7 @@ body {
 .card-portfolio {
     display: flex;
     flex-direction: column;
-    min-height: 260px;
+    min-height: 280px;
 }
 
 .portfolio-top {
@@ -536,7 +539,7 @@ body {
     align-items: flex-end;
     justify-content: center;
     padding: 0;
-    min-height: 260px;
+    min-height: 280px;
     overflow: hidden;
 }
 
@@ -598,9 +601,9 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: var(--space-xl) var(--space-lg);
-    min-height: 90px;
-    gap: var(--space-sm);
+    padding: var(--space-2xl) var(--space-xl);
+    min-height: 100px;
+    gap: var(--space-md);
 }
 
 .small-icon {
@@ -692,7 +695,8 @@ body {
     }
 
     .bento-main {
-        padding: var(--space-2xl);
+        padding: var(--space-3xl);
+        gap: var(--space-3xl);
     }
 
     .cards-row {
@@ -706,7 +710,7 @@ body {
     .behance-grid {
         grid-template-columns: repeat(2, 1fr);
         grid-template-rows: repeat(3, 1fr);
-        height: 220px;
+        height: 240px;
     }
 }
 
@@ -725,7 +729,8 @@ body {
     }
 
     .bento-main {
-        padding: var(--space-lg);
+        padding: var(--space-xl);
+        gap: var(--space-2xl);
     }
 
     .cards-extra {
@@ -738,7 +743,7 @@ body {
 
     .section-label {
         font-size: 0.875rem;
-        margin-bottom: var(--space-sm);
+        margin-bottom: var(--space-md);
     }
 }
 
