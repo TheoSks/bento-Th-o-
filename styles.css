@@ -799,3 +799,223 @@ body {
         transition-duration: 0.01ms !important;
     }
 }
+
+/* ========================================
+   MARQUEE BANNER
+   ======================================== */
+.marquee-banner {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(90deg, #0a66c2 0%, #1769ff 50%, #764ba2 100%);
+    color: white;
+    padding: 10px 0;
+    z-index: 1000;
+    overflow: hidden;
+}
+
+.marquee-content {
+    display: flex;
+    animation: marquee 30s linear infinite;
+    white-space: nowrap;
+}
+
+.marquee-text {
+    font-size: 0.875rem;
+    font-weight: 500;
+    padding: 0 50px;
+    letter-spacing: 0.3px;
+}
+
+@keyframes marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
+.marquee-banner:hover .marquee-content {
+    animation-play-state: paused;
+}
+
+/* Adjust body for marquee */
+body {
+    padding-top: 40px;
+}
+
+/* ========================================
+   DRAG AND DROP
+   ======================================== */
+.drag-handle {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    color: var(--text-muted);
+    cursor: grab;
+    opacity: 0;
+    transition: opacity var(--transition);
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 4px;
+    z-index: 10;
+    user-select: none;
+}
+
+.card {
+    position: relative;
+}
+
+.card:hover .drag-handle {
+    opacity: 0;
+}
+
+/* Edit Mode Active */
+body.edit-mode .drag-handle {
+    opacity: 1 !important;
+}
+
+body.edit-mode .card {
+    cursor: grab;
+}
+
+body.edit-mode .card:active {
+    cursor: grabbing;
+}
+
+body.edit-mode .card:hover {
+    transform: none;
+    box-shadow: 0 0 0 3px var(--linkedin);
+}
+
+body.edit-mode .card a,
+body.edit-mode .card button {
+    pointer-events: none;
+}
+
+/* Sortable ghost and chosen states */
+.sortable-ghost {
+    opacity: 0.4;
+    background: var(--linkedin) !important;
+}
+
+.sortable-chosen {
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15) !important;
+    transform: scale(1.02) rotate(1deg);
+}
+
+.sortable-drag {
+    opacity: 1 !important;
+}
+
+/* ========================================
+   GOOGLE MAPS CARD
+   ======================================== */
+.card-map {
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    overflow: hidden;
+    min-height: 140px;
+}
+
+.map-container {
+    flex: 1;
+    min-height: 100px;
+    position: relative;
+}
+
+.map-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    transition: filter var(--transition);
+    filter: grayscale(100%) contrast(1.1);
+}
+
+.card-map:hover .map-container iframe {
+    filter: grayscale(0%) contrast(1);
+    pointer-events: auto;
+}
+
+.map-label {
+    padding: var(--space-md);
+    font-size: 0.813rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    text-align: center;
+    background: var(--card-bg);
+}
+
+/* ========================================
+   EDIT MODE INDICATOR
+   ======================================== */
+.edit-mode-indicator {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: #1d1d1f;
+    color: white;
+    padding: 12px 24px;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    z-index: 9999;
+    opacity: 0;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.edit-mode-indicator span {
+    font-weight: 600;
+    font-size: 0.938rem;
+}
+
+.edit-mode-indicator small {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+body.edit-mode .edit-mode-indicator {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+/* Edit button active state */
+body.edit-mode #edit-mode-toggle {
+    background: var(--linkedin);
+    color: white;
+    border-color: var(--linkedin);
+}
+
+/* ========================================
+   RESPONSIVE ADJUSTMENTS
+   ======================================== */
+@media (max-width: 900px) {
+    .marquee-banner {
+        padding: 8px 0;
+    }
+
+    .marquee-text {
+        font-size: 0.75rem;
+    }
+
+    body {
+        padding-top: 36px;
+    }
+}
+
+@media (max-width: 600px) {
+    .card-map {
+        min-height: 120px;
+    }
+}

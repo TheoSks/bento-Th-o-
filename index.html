@@ -8,8 +8,18 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- SortableJS for drag-and-drop -->
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
 </head>
 <body>
+    <!-- Text Marquee Banner -->
+    <div class="marquee-banner">
+        <div class="marquee-content">
+            <span class="marquee-text">✨ Product Designer @ Betclic Group • Open for freelance projects • Based in Bordeaux, France 🇫🇷 • Let's create something amazing together! 🚀</span>
+            <span class="marquee-text">✨ Product Designer @ Betclic Group • Open for freelance projects • Based in Bordeaux, France 🇫🇷 • Let's create something amazing together! 🚀</span>
+        </div>
+    </div>
+
     <div class="bento-container">
         <!-- Profile Sidebar -->
         <aside class="profile-section">
@@ -22,9 +32,10 @@
             </div>
             <div class="profile-footer">
                 <button class="btn-login">Log In</button>
-                <button class="btn-icon">
+                <button class="btn-icon" id="edit-mode-toggle" title="Toggle Edit Mode">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/>
+                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+                        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
                     </svg>
                 </button>
             </div>
@@ -35,9 +46,10 @@
             <!-- Réseaux Section -->
             <section class="bento-section">
                 <h2 class="section-label">Réseaux 📲</h2>
-                <div class="cards-row">
+                <div class="cards-row sortable-cards" data-section="reseaux">
                     <!-- LinkedIn -->
-                    <a href="https://www.linkedin.com/in/theogaggio" target="_blank" class="card card-linkedin">
+                    <a href="https://www.linkedin.com/in/theogaggio" target="_blank" class="card card-linkedin" data-id="linkedin">
+                        <div class="drag-handle">⋮⋮</div>
                         <div class="card-top">
                             <div class="linkedin-icon">
                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
@@ -55,7 +67,8 @@
                     </a>
 
                     <!-- Figma -->
-                    <div class="card card-figma">
+                    <div class="card card-figma" data-id="figma">
+                        <div class="drag-handle">⋮⋮</div>
                         <div class="figma-top">
                             <div class="figma-icon">
                                 <svg width="20" height="30" viewBox="0 0 38 57" fill="none">
@@ -86,25 +99,28 @@
 
             <!-- Behance Section -->
             <section class="bento-section">
-                <div class="card card-behance">
-                    <div class="behance-top">
-                        <div class="behance-icon">
-                            <svg width="28" height="18" viewBox="0 0 72 45" fill="white">
-                                <path d="M27.8 32.4c0 7.7-5.7 11-11 11H0V1.6h15.7c5.7 0 10.3 2.9 10.3 9.4 0 4-2.1 6.7-5.2 8 4 1.1 7 4.5 7 13.4zm-17.4-19h5c3 0 4.7-1.3 4.7-4.2s-1.4-4-4.5-4h-5.2v8.2zm0 16.2h5.7c3.3 0 5.2-1.6 5.2-5s-1.7-5.2-5.4-5.2h-5.5v10.2zM72 27.2H45.7c.4 5.3 3 7.8 7 7.8 3.2 0 5.4-1.6 6.3-4.4h12.3c-2 8-8.5 12.5-18.7 12.5-12.2 0-19.4-8-19.4-18.6s7.6-18.8 19.3-18.8c12.4 0 19.5 9 19.5 19.2v2.3zM45.8 20.5h14c-.3-4.5-3-6.8-6.8-6.8-4 0-6.6 2.5-7.2 6.8zM44 0h18.3v5.6H44V0z"/>
-                            </svg>
+                <div class="cards-row sortable-cards" data-section="behance">
+                    <div class="card card-behance" data-id="behance">
+                        <div class="drag-handle">⋮⋮</div>
+                        <div class="behance-top">
+                            <div class="behance-icon">
+                                <svg width="28" height="18" viewBox="0 0 72 45" fill="white">
+                                    <path d="M27.8 32.4c0 7.7-5.7 11-11 11H0V1.6h15.7c5.7 0 10.3 2.9 10.3 9.4 0 4-2.1 6.7-5.2 8 4 1.1 7 4.5 7 13.4zm-17.4-19h5c3 0 4.7-1.3 4.7-4.2s-1.4-4-4.5-4h-5.2v8.2zm0 16.2h5.7c3.3 0 5.2-1.6 5.2-5s-1.7-5.2-5.4-5.2h-5.5v10.2zM72 27.2H45.7c.4 5.3 3 7.8 7 7.8 3.2 0 5.4-1.6 6.3-4.4h12.3c-2 8-8.5 12.5-18.7 12.5-12.2 0-19.4-8-19.4-18.6s7.6-18.8 19.3-18.8c12.4 0 19.5 9 19.5 19.2v2.3zM45.8 20.5h14c-.3-4.5-3-6.8-6.8-6.8-4 0-6.6 2.5-7.2 6.8zM44 0h18.3v5.6H44V0z"/>
+                                </svg>
+                            </div>
+                            <span class="behance-title">Behance</span>
+                            <a href="https://behance.net/theogaggio" target="_blank" class="btn-follow btn-behance">
+                                Follow <span class="follow-badge">2</span>
+                            </a>
                         </div>
-                        <span class="behance-title">Behance</span>
-                        <a href="https://behance.net/theogaggio" target="_blank" class="btn-follow btn-behance">
-                            Follow <span class="follow-badge">2</span>
-                        </a>
-                    </div>
-                    <div class="behance-grid">
-                        <div class="behance-thumb" style="background-image: url('https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=300&h=200&fit=crop');"></div>
-                        <div class="behance-thumb" style="background-image: url('https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=300&h=200&fit=crop');"></div>
-                        <div class="behance-thumb" style="background-image: url('https://images.unsplash.com/photo-1559028012-481c04fa702d?w=300&h=200&fit=crop');"></div>
-                        <div class="behance-thumb" style="background-image: url('https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=300&h=200&fit=crop');"></div>
-                        <div class="behance-thumb" style="background-image: url('https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=300&h=200&fit=crop');"></div>
-                        <div class="behance-thumb" style="background-image: url('https://images.unsplash.com/photo-1555421689-491a97ff2040?w=300&h=200&fit=crop');"></div>
+                        <div class="behance-grid">
+                            <div class="behance-thumb" style="background-image: url('https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=300&h=200&fit=crop');"></div>
+                            <div class="behance-thumb" style="background-image: url('https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=300&h=200&fit=crop');"></div>
+                            <div class="behance-thumb" style="background-image: url('https://images.unsplash.com/photo-1559028012-481c04fa702d?w=300&h=200&fit=crop');"></div>
+                            <div class="behance-thumb" style="background-image: url('https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=300&h=200&fit=crop');"></div>
+                            <div class="behance-thumb" style="background-image: url('https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=300&h=200&fit=crop');"></div>
+                            <div class="behance-thumb" style="background-image: url('https://images.unsplash.com/photo-1555421689-491a97ff2040?w=300&h=200&fit=crop');"></div>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -112,9 +128,10 @@
             <!-- Design Section -->
             <section class="bento-section">
                 <h2 class="section-label">Design 📊</h2>
-                <div class="cards-row cards-design">
+                <div class="cards-row cards-design sortable-cards" data-section="design">
                     <!-- Portfolio -->
-                    <a href="https://theogaggio-portfolio.webflow.io" target="_blank" class="card card-portfolio">
+                    <a href="https://theogaggio-portfolio.webflow.io" target="_blank" class="card card-portfolio" data-id="portfolio">
+                        <div class="drag-handle">⋮⋮</div>
                         <div class="portfolio-top">
                             <div class="portfolio-avatar">
                                 <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=50&h=50&fit=crop&crop=faces" alt="">
@@ -144,7 +161,8 @@
                     </a>
 
                     <!-- Device Mockup -->
-                    <div class="card card-device">
+                    <div class="card card-device" data-id="device">
+                        <div class="drag-handle">⋮⋮</div>
                         <div class="device-wrapper">
                             <div class="macbook">
                                 <div class="macbook-screen">
@@ -162,8 +180,9 @@
             <!-- Extra Section -->
             <section class="bento-section">
                 <h2 class="section-label">Extra ✨</h2>
-                <div class="cards-row cards-extra">
-                    <a href="mailto:theo@gaggio.fr" class="card card-small card-email">
+                <div class="cards-row cards-extra sortable-cards" data-section="extra">
+                    <a href="mailto:theo@gaggio.fr" class="card card-small card-email" data-id="email">
+                        <div class="drag-handle">⋮⋮</div>
                         <div class="small-icon">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <rect x="2" y="4" width="20" height="16" rx="2"/>
@@ -172,7 +191,8 @@
                         </div>
                         <span class="small-label">Email</span>
                     </a>
-                    <a href="https://twitter.com/theogaggio" target="_blank" class="card card-small card-twitter">
+                    <a href="https://twitter.com/theogaggio" target="_blank" class="card card-small card-twitter" data-id="twitter">
+                        <div class="drag-handle">⋮⋮</div>
                         <div class="small-icon">
                             <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
                                 <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
@@ -180,22 +200,36 @@
                         </div>
                         <span class="small-label">Twitter</span>
                     </a>
-                    <div class="card card-small card-location">
-                        <div class="small-icon">
-                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
-                                <circle cx="12" cy="10" r="3"/>
-                            </svg>
+                    <!-- Google Maps Card -->
+                    <div class="card card-map" data-id="map">
+                        <div class="drag-handle">⋮⋮</div>
+                        <div class="map-container">
+                            <iframe
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d90834.31805689662!2d-0.6567!3d44.8378!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd5527e8f751ca81%3A0x796386037b397a89!2sBordeaux!5e0!3m2!1sfr!2sfr!4v1703084800000!5m2!1sfr!2sfr"
+                                width="100%"
+                                height="100%"
+                                style="border:0; border-radius: 12px;"
+                                allowfullscreen=""
+                                loading="lazy"
+                                referrerpolicy="no-referrer-when-downgrade">
+                            </iframe>
                         </div>
-                        <span class="small-label">Bordeaux 🇫🇷</span>
+                        <span class="map-label">Bordeaux 🇫🇷</span>
                     </div>
-                    <div class="card card-small card-status">
+                    <div class="card card-small card-status" data-id="status">
+                        <div class="drag-handle">⋮⋮</div>
                         <div class="status-dot"></div>
                         <span class="small-label">Available</span>
                     </div>
                 </div>
             </section>
         </main>
+    </div>
+
+    <!-- Edit Mode Indicator -->
+    <div class="edit-mode-indicator" id="edit-indicator">
+        <span>🔧 Edit Mode</span>
+        <small>Drag cards to reorder</small>
     </div>
 
     <script src="script.js"></script>
