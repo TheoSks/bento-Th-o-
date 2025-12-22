@@ -1,107 +1,213 @@
-# 🎨 Portfolio Bento - Théo Gaggio
+# 🍱 Bento - Link in Bio Platform
 
-Portfolio moderne style Bento avec animations et interactions fluides.
+A modern, full-stack Bento.me clone built with Next.js 14, TypeScript, and Tailwind CSS. Create beautiful, customizable link-in-bio pages with a drag-and-drop grid editor.
 
-## ✨ Caractéristiques
+## ✨ Features
 
-- **Design Bento Grid** : Disposition en grille avec blocs de différentes tailles
-- **Animations fluides** : Effets au survol et au clic
-- **Interactions riches** :
-  - Effet ripple au clic
-  - Effet tilt 3D au survol
-  - Animations d'entrée progressives
-  - Parallax sur le header
-- **Support vidéo** : Lecture automatique au survol
-- **Responsive** : Adaptation parfaite à tous les écrans
-- **Performance optimisée** : Animations CSS et lazy loading
+- **Drag & Drop Editor**: Intuitive grid-based editor with react-grid-layout
+- **Smart Widgets**: Multiple widget types with rich previews
+- **Responsive Design**: Mobile-first, works on all devices
+- **Dark/Light Theme**: Built-in theme support
+- **Auto-save**: Changes are automatically saved
+- **Fast & Modern**: Built with Next.js 14 App Router
 
-## 🚀 Technologies
+## 🚀 Tech Stack
 
-- **HTML5** : Structure sémantique
-- **CSS3** : Grid, animations, transformations 3D
-- **JavaScript Vanilla** : Interactions et effets
-- **CSS Variables** : Thème personnalisable
+### Frontend
+- **Framework**: Next.js 14 (App Router)
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS + CSS Variables
+- **State**: Zustand
+- **Animations**: Framer Motion
+- **Drag & Drop**: react-grid-layout
 
-## 📦 Structure
+### Backend
+- **Runtime**: Node.js
+- **Database**: PostgreSQL (via Prisma)
+- **Auth**: NextAuth.js
+- **API**: Next.js API Routes
+
+## 📦 Project Structure
 
 ```
-bento-portfolio/
-├── index.html          # Structure HTML
-├── styles.css          # Styles et animations
-├── script.js           # Interactions JavaScript
-├── assets/            # Médias (images, vidéos)
-└── README.md          # Documentation
+src/
+├── app/
+│   ├── (auth)/
+│   │   ├── login/
+│   │   └── register/
+│   ├── (dashboard)/
+│   │   └── editor/
+│   ├── [username]/          # Public profile pages
+│   ├── demo/                 # Demo page
+│   ├── api/
+│   │   ├── auth/
+│   │   ├── bento/
+│   │   ├── oembed/
+│   │   └── upload/
+│   ├── globals.css
+│   ├── layout.tsx
+│   └── page.tsx
+├── components/
+│   ├── editor/
+│   │   ├── BentoEditor.tsx
+│   │   ├── WidgetPicker.tsx
+│   │   └── WidgetSettings.tsx
+│   ├── widgets/
+│   │   ├── LinkWidget.tsx
+│   │   ├── ImageWidget.tsx
+│   │   ├── TextWidget.tsx
+│   │   ├── SpotifyWidget.tsx
+│   │   ├── YouTubeWidget.tsx
+│   │   ├── GitHubWidget.tsx
+│   │   └── ...
+│   └── public/
+│       └── BentoPage.tsx
+├── lib/
+│   ├── db.ts
+│   ├── auth.ts
+│   ├── oembed.ts
+│   └── utils.ts
+├── hooks/
+│   └── useAutoSave.ts
+├── store/
+│   └── editorStore.ts
+├── types/
+│   └── index.ts
+└── prisma/
+    └── schema.prisma
 ```
 
-## 🎯 Blocs disponibles
+## 🛠️ Getting Started
 
-1. **Header** : Présentation avec nom et tags
-2. **About** : Description personnelle
-3. **Social Links** : GitHub, LinkedIn, Twitter
-4. **Video Showcase** : Vidéo de démonstration
-5. **Skills** : Compétences techniques
-6. **Email** : Contact par email
-7. **Portfolio** : Lien vers projets
-8. **Location** : Localisation
-9. **Status** : Disponibilité
-10. **Gallery** : Galerie de projets
+### Prerequisites
 
-## 🎨 Personnalisation
+- Node.js 18+
+- PostgreSQL database
+- npm or yarn
 
-### Couleurs
+### Installation
 
-Modifiez les variables CSS dans `styles.css` :
+1. **Clone and install dependencies**
+   ```bash
+   git clone <repository-url>
+   cd bento-clone
+   npm install
+   ```
+
+2. **Set up environment variables**
+   ```bash
+   cp .env.example .env
+   ```
+   Edit `.env` with your database URL and OAuth credentials.
+
+3. **Set up the database**
+   ```bash
+   npx prisma generate
+   npx prisma db push
+   ```
+
+4. **Start the development server**
+   ```bash
+   npm run dev
+   ```
+
+5. **Open [http://localhost:3000](http://localhost:3000)**
+
+## 🎯 Available Widgets
+
+| Widget | Type | Description |
+|--------|------|-------------|
+| Link | Basic | Add links with preview |
+| Text | Basic | Custom text content |
+| Image | Basic | Upload or embed images |
+| Twitter/X | Social | Profile link |
+| Instagram | Social | Profile link |
+| LinkedIn | Social | Profile link |
+| GitHub | Social | Profile with stats |
+| YouTube | Media | Embed videos |
+| Spotify | Media | Embed tracks/playlists |
+| Twitch | Media | Stream link |
+| Dribbble | Design | Portfolio link |
+| Behance | Design | Portfolio link |
+| Figma | Design | Design link |
+| Medium | Writing | Blog link |
+| Substack | Writing | Newsletter link |
+| Buy Me a Coffee | Support | Donation link |
+| Patreon | Support | Subscription link |
+
+## 📝 Scripts
+
+```bash
+npm run dev        # Start development server
+npm run build      # Build for production
+npm run start      # Start production server
+npm run lint       # Run ESLint
+npm run db:push    # Push Prisma schema to database
+npm run db:studio  # Open Prisma Studio
+```
+
+## 🔧 Configuration
+
+### Environment Variables
+
+```env
+# Database
+DATABASE_URL="postgresql://..."
+
+# NextAuth
+NEXTAUTH_URL="http://localhost:3000"
+NEXTAUTH_SECRET="your-secret"
+
+# OAuth (optional)
+GOOGLE_CLIENT_ID=""
+GOOGLE_CLIENT_SECRET=""
+```
+
+### Theme Customization
+
+Edit CSS variables in `src/app/globals.css`:
 
 ```css
 :root {
-    --accent-1: #6366f1;    /* Indigo */
-    --accent-2: #8b5cf6;    /* Violet */
-    --accent-3: #ec4899;    /* Rose */
+  --color-primary: #0066cc;
+  --widget-radius: 16px;
+  --grid-gap: 16px;
+}
+
+.dark {
+  --color-bg: #0a0a0a;
+  --widget-bg: #1c1c1e;
 }
 ```
 
-### Contenus
+## 🌐 Deployment
 
-Éditez directement dans `index.html` :
-- Nom et titre
-- Liens sociaux
-- Compétences
-- Projets
+### Vercel (Recommended)
 
-### Médias
+```bash
+npm i -g vercel
+vercel
+```
 
-Placez vos fichiers dans le dossier `assets/` :
-- **Vidéos** : `assets/demo-project.mp4`
-- **Images** : `assets/project-1.jpg`, etc.
+### Docker
 
-## 🌟 Animations incluses
+```bash
+docker build -t bento-clone .
+docker run -p 3000:3000 bento-clone
+```
 
-- **Hover** : Translation, scale, glow
-- **Click** : Ripple effect
-- **Scroll** : Fade in avec délai progressif
-- **Mouse** : Parallax et tilt 3D
-- **Gradient** : Rotation animée
-- **Pulse** : Indicateur de status
+## 📱 Demo
 
-## 📱 Responsive
+Visit `/demo` to see a sample Bento page without authentication.
 
-- **Desktop** : Grille multi-colonnes
-- **Tablet** : Adaptation automatique
-- **Mobile** : Une colonne, optimisé tactile
+## 🤝 Contributing
 
-## 🛠️ Installation
+Contributions are welcome! Please read our contributing guidelines.
 
-1. Clonez le repository
-2. Ajoutez vos médias dans `assets/`
-3. Personnalisez les contenus dans `index.html`
-4. Ouvrez `index.html` dans votre navigateur
+## 📄 License
 
-Aucune dépendance requise ! 🎉
-
-## 📄 Licence
-
-Libre d'utilisation pour vos projets personnels.
+MIT License - feel free to use for personal and commercial projects.
 
 ---
 
-Créé avec ❤️ pour Théo Gaggio
+Built with ❤️ using Next.js and Tailwind CSS
