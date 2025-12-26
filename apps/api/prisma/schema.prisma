@@ -1,0 +1,366 @@
+// schema.prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ============================================
+// AUTH & USERS
+// ============================================
+
+model User {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  username      String    @unique
+  passwordHash  String
+  avatar        String?
+
+  // Progression
+  xp            Int       @default(0)
+  level         Int       @default(1)
+
+  // Stats
+  gamesPlayed   Int       @default(0)
+  gamesWon      Int       @default(0)
+  totalCorrect  Int       @default(0)
+  totalAnswers  Int       @default(0)
+  bestStreak    Int       @default(0)
+  currentStreak Int       @default(0)
+  lastPlayedAt  DateTime?
+
+  // Relations
+  badges        UserBadge[]
+  gameHistory   GamePlayer[]
+  friends       Friendship[]  @relation("UserFriends")
+  friendOf      Friendship[]  @relation("FriendOf")
+  sentChallenges    Challenge[] @relation("ChallengeSender")
+  receivedChallenges Challenge[] @relation("ChallengeReceiver")
+
+  // OAuth
+  discordId     String?   @unique
+  twitchId      String?   @unique
+
+  // Timestamps
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  @@index([username])
+  @@index([xp])
+}
+
+model Friendship {
+  id        String   @id @default(cuid())
+  userId    String
+  friendId  String
+  status    FriendshipStatus @default(PENDING)
+  user      User     @relation("UserFriends", fields: [userId], references: [id])
+  friend    User     @relation("FriendOf", fields: [friendId], references: [id])
+  createdAt DateTime @default(now())
+
+  @@unique([userId, friendId])
+}
+
+enum FriendshipStatus {
+  PENDING
+  ACCEPTED
+  BLOCKED
+}
+
+// ============================================
+// BADGES & ACHIEVEMENTS
+// ============================================
+
+model Badge {
+  id          String      @id @default(cuid())
+  code        String      @unique
+  name        String
+  description String
+  icon        String
+  category    BadgeCategory
+  rarity      BadgeRarity
+  condition   Json
+  xpReward    Int         @default(0)
+  users       UserBadge[]
+
+  @@index([category])
+}
+
+model UserBadge {
+  id        String   @id @default(cuid())
+  userId    String
+  badgeId   String
+  unlockedAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
+  badge     Badge    @relation(fields: [badgeId], references: [id])
+
+  @@unique([userId, badgeId])
+}
+
+enum BadgeCategory {
+  PROGRESSION
+  PERFORMANCE
+  GENRE
+  SOCIAL
+  SPECIAL
+}
+
+enum BadgeRarity {
+  COMMON
+  UNCOMMON
+  RARE
+  EPIC
+  LEGENDARY
+}
+
+// ============================================
+// GAMES & ROOMS
+// ============================================
+
+model Game {
+  id          String       @id @default(cuid())
+  roomCode    String
+  hostId      String?
+  status      GameStatus   @default(LOBBY)
+  settings    Json
+
+  // Game data
+  currentRound Int         @default(0)
+  totalRounds  Int         @default(15)
+
+  // Relations
+  players     GamePlayer[]
+  rounds      GameRound[]
+
+  // Timestamps
+  startedAt   DateTime?
+  endedAt     DateTime?
+  createdAt   DateTime     @default(now())
+
+  @@index([roomCode])
+  @@index([status])
+}
+
+model GamePlayer {
+  id        String   @id @default(cuid())
+  gameId    String
+
+  // Player identity (either userId or guestName)
+  userId    String?
+  guestName String?
+
+  // In-game data
+  score     Int      @default(0)
+  rank      Int?
+  isHost    Boolean  @default(false)
+
+  // Relations
+  game      Game     @relation(fields: [gameId], references: [id])
+  user      User?    @relation(fields: [userId], references: [id])
+  answers   PlayerAnswer[]
+
+  // Timestamps
+  joinedAt  DateTime @default(now())
+  leftAt    DateTime?
+
+  @@unique([gameId, userId])
+  @@index([gameId])
+}
+
+model GameRound {
+  id          String   @id @default(cuid())
+  gameId      String
+  roundNumber Int
+  songId      String
+
+  // Round timing
+  startedAt   DateTime?
+  endedAt     DateTime?
+
+  // Relations
+  game        Game     @relation(fields: [gameId], references: [id])
+  song        Song     @relation(fields: [songId], references: [id])
+  answers     PlayerAnswer[]
+
+  @@unique([gameId, roundNumber])
+}
+
+model PlayerAnswer {
+  id          String     @id @default(cuid())
+  roundId     String
+  playerId    String
+
+  answer      String
+  isCorrect   Boolean
+  responseTime Int
+  points      Int        @default(0)
+
+  // Relations
+  round       GameRound  @relation(fields: [roundId], references: [id])
+  player      GamePlayer @relation(fields: [playerId], references: [id])
+
+  // Timestamp
+  answeredAt  DateTime   @default(now())
+
+  @@unique([roundId, playerId])
+}
+
+enum GameStatus {
+  LOBBY
+  STARTING
+  PLAYING
+  ROUND_END
+  FINISHED
+  CANCELLED
+}
+
+// ============================================
+// SONGS & PLAYLISTS
+// ============================================
+
+model Song {
+  id          String   @id @default(cuid())
+  title       String
+  artist      String
+  album       String?
+  year        Int?
+  genre       String[]
+  duration    Int
+  previewUrl  String
+  coverUrl    String?
+
+  // Metadata
+  difficulty  Difficulty @default(MEDIUM)
+  popularity  Int        @default(0)
+
+  // Relations
+  playlists   PlaylistSong[]
+  rounds      GameRound[]
+
+  // Timestamps
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([genre])
+  @@index([year])
+}
+
+model Playlist {
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  coverUrl    String?
+
+  // Metadata
+  category    String
+  isPublic    Boolean  @default(true)
+  songCount   Int      @default(0)
+
+  // Relations
+  songs       PlaylistSong[]
+
+  // Timestamps
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([category])
+}
+
+model PlaylistSong {
+  id         String   @id @default(cuid())
+  playlistId String
+  songId     String
+  order      Int
+
+  playlist   Playlist @relation(fields: [playlistId], references: [id])
+  song       Song     @relation(fields: [songId], references: [id])
+
+  @@unique([playlistId, songId])
+  @@index([playlistId])
+}
+
+enum Difficulty {
+  EASY
+  MEDIUM
+  HARD
+  EXPERT
+}
+
+// ============================================
+// CHALLENGES & DAILY
+// ============================================
+
+model DailyChallenge {
+  id          String   @id @default(cuid())
+  date        DateTime @unique @db.Date
+  playlistId  String
+
+  // Leaderboard cached
+  topScores   Json
+
+  // Timestamps
+  createdAt   DateTime @default(now())
+
+  @@index([date])
+}
+
+model Challenge {
+  id          String   @id @default(cuid())
+  senderId    String
+  receiverId  String
+  playlistId  String
+
+  // Scores
+  senderScore   Int?
+  receiverScore Int?
+
+  status      ChallengeStatus @default(PENDING)
+
+  // Relations
+  sender      User     @relation("ChallengeSender", fields: [senderId], references: [id])
+  receiver    User     @relation("ChallengeReceiver", fields: [receiverId], references: [id])
+
+  // Timestamps
+  createdAt   DateTime @default(now())
+  expiresAt   DateTime
+  completedAt DateTime?
+}
+
+enum ChallengeStatus {
+  PENDING
+  IN_PROGRESS
+  COMPLETED
+  EXPIRED
+  DECLINED
+}
+
+// ============================================
+// LEADERBOARDS
+// ============================================
+
+model Leaderboard {
+  id        String   @id @default(cuid())
+  type      LeaderboardType
+  period    String?
+  category  String?
+
+  // Cached data
+  rankings  Json
+
+  // Timestamps
+  updatedAt DateTime @updatedAt
+
+  @@unique([type, period, category])
+}
+
+enum LeaderboardType {
+  GLOBAL_ALL_TIME
+  GLOBAL_WEEKLY
+  GLOBAL_MONTHLY
+  GENRE_ALL_TIME
+  GENRE_WEEKLY
+}

@@ -1,0 +1,32 @@
+{
+  "name": "blindtest-party",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Application de blindtest musical multijoueur",
+  "scripts": {
+    "dev": "concurrently \"npm run dev:web\" \"npm run dev:api\"",
+    "dev:web": "npm -w apps/web run dev",
+    "dev:api": "npm -w apps/api run dev",
+    "build": "npm run build:shared && npm run build:web && npm run build:api",
+    "build:web": "npm -w apps/web run build",
+    "build:api": "npm -w apps/api run build",
+    "build:shared": "npm -w packages/shared run build",
+    "lint": "npm run lint:web && npm run lint:api",
+    "lint:web": "npm -w apps/web run lint",
+    "lint:api": "npm -w apps/api run lint",
+    "db:generate": "npm -w apps/api run db:generate",
+    "db:push": "npm -w apps/api run db:push",
+    "db:migrate": "npm -w apps/api run db:migrate"
+  },
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "devDependencies": {
+    "concurrently": "^8.2.2",
+    "typescript": "^5.3.3"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

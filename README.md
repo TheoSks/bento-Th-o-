@@ -1,107 +1,128 @@
-# 🎨 Portfolio Bento - Théo Gaggio
+# BlindTest Party
 
-Portfolio moderne style Bento avec animations et interactions fluides.
+Le blindtest multijoueur instantane - Jouez sans inscription ou creez votre compte pour progresser !
 
-## ✨ Caractéristiques
+## Caracteristiques
 
-- **Design Bento Grid** : Disposition en grille avec blocs de différentes tailles
-- **Animations fluides** : Effets au survol et au clic
-- **Interactions riches** :
-  - Effet ripple au clic
-  - Effet tilt 3D au survol
-  - Animations d'entrée progressives
-  - Parallax sur le header
-- **Support vidéo** : Lecture automatique au survol
-- **Responsive** : Adaptation parfaite à tous les écrans
-- **Performance optimisée** : Animations CSS et lazy loading
+### Mode Guest
+- Acces instantane, pas d'inscription
+- Pseudo temporaire
+- Rooms publiques et privees
+- Multijoueur jusqu'a 8 joueurs
 
-## 🚀 Technologies
+### Mode Compte
+- Progression complete (XP, Niveaux)
+- Badges et achievements
+- Stats personnelles
+- Classements (global, hebdo, amis)
+- Mode solo et multijoueur
+- Defi quotidien
+- Defis entre amis
 
-- **HTML5** : Structure sémantique
-- **CSS3** : Grid, animations, transformations 3D
-- **JavaScript Vanilla** : Interactions et effets
-- **CSS Variables** : Thème personnalisable
+## Stack Technique
 
-## 📦 Structure
+### Frontend
+- React 18 + TypeScript
+- Vite
+- Tailwind CSS
+- Framer Motion
+- Zustand (state management)
+- Socket.io Client
+- React Router v6
 
-```
-bento-portfolio/
-├── index.html          # Structure HTML
-├── styles.css          # Styles et animations
-├── script.js           # Interactions JavaScript
-├── assets/            # Médias (images, vidéos)
-└── README.md          # Documentation
-```
+### Backend
+- Node.js + Express
+- Socket.io
+- Prisma ORM
+- PostgreSQL
+- Redis (sessions, cache)
+- JWT Authentication
 
-## 🎯 Blocs disponibles
+## Installation
 
-1. **Header** : Présentation avec nom et tags
-2. **About** : Description personnelle
-3. **Social Links** : GitHub, LinkedIn, Twitter
-4. **Video Showcase** : Vidéo de démonstration
-5. **Skills** : Compétences techniques
-6. **Email** : Contact par email
-7. **Portfolio** : Lien vers projets
-8. **Location** : Localisation
-9. **Status** : Disponibilité
-10. **Gallery** : Galerie de projets
+### Prerequis
+- Node.js 18+
+- PostgreSQL
+- Redis (optionnel)
 
-## 🎨 Personnalisation
+### Configuration
 
-### Couleurs
-
-Modifiez les variables CSS dans `styles.css` :
-
-```css
-:root {
-    --accent-1: #6366f1;    /* Indigo */
-    --accent-2: #8b5cf6;    /* Violet */
-    --accent-3: #ec4899;    /* Rose */
-}
+1. Cloner le repository
+```bash
+git clone https://github.com/your-repo/blindtest-party.git
+cd blindtest-party
 ```
 
-### Contenus
+2. Installer les dependances
+```bash
+npm install
+```
 
-Éditez directement dans `index.html` :
-- Nom et titre
-- Liens sociaux
-- Compétences
-- Projets
+3. Configurer les variables d'environnement
+```bash
+cp apps/api/.env.example apps/api/.env
+# Editer apps/api/.env avec vos configurations
+```
 
-### Médias
+4. Initialiser la base de donnees
+```bash
+npm run db:push
+```
 
-Placez vos fichiers dans le dossier `assets/` :
-- **Vidéos** : `assets/demo-project.mp4`
-- **Images** : `assets/project-1.jpg`, etc.
+5. Lancer le developpement
+```bash
+npm run dev
+```
 
-## 🌟 Animations incluses
+L'application sera disponible sur:
+- Frontend: http://localhost:3000
+- Backend: http://localhost:4000
 
-- **Hover** : Translation, scale, glow
-- **Click** : Ripple effect
-- **Scroll** : Fade in avec délai progressif
-- **Mouse** : Parallax et tilt 3D
-- **Gradient** : Rotation animée
-- **Pulse** : Indicateur de status
+## Scripts
 
-## 📱 Responsive
+```bash
+# Developpement
+npm run dev          # Lance frontend + backend
+npm run dev:web      # Lance uniquement le frontend
+npm run dev:api      # Lance uniquement le backend
 
-- **Desktop** : Grille multi-colonnes
-- **Tablet** : Adaptation automatique
-- **Mobile** : Une colonne, optimisé tactile
+# Build
+npm run build        # Build tous les packages
 
-## 🛠️ Installation
+# Base de donnees
+npm run db:generate  # Genere le client Prisma
+npm run db:push      # Push le schema vers la BDD
+npm run db:migrate   # Cree une migration
+```
 
-1. Clonez le repository
-2. Ajoutez vos médias dans `assets/`
-3. Personnalisez les contenus dans `index.html`
-4. Ouvrez `index.html` dans votre navigateur
+## Structure du projet
 
-Aucune dépendance requise ! 🎉
+```
+blindtest-party/
+├── apps/
+│   ├── web/                    # Frontend React
+│   │   ├── src/
+│   │   │   ├── components/     # Composants UI
+│   │   │   ├── pages/          # Pages de l'app
+│   │   │   ├── hooks/          # Custom hooks
+│   │   │   ├── stores/         # Zustand stores
+│   │   │   ├── lib/            # Utilitaires
+│   │   │   └── types/          # TypeScript types
+│   │   └── ...
+│   │
+│   └── api/                    # Backend Node.js
+│       ├── src/
+│       │   ├── routes/         # API routes
+│       │   ├── middleware/     # Express middleware
+│       │   ├── socket/         # WebSocket handlers
+│       │   └── utils/          # Utilitaires
+│       └── prisma/
+│           └── schema.prisma   # Schema BDD
+│
+└── packages/
+    └── shared/                 # Types et constantes partages
+```
 
-## 📄 Licence
+## Licence
 
-Libre d'utilisation pour vos projets personnels.
-
----
-
-Créé avec ❤️ pour Théo Gaggio
+MIT
