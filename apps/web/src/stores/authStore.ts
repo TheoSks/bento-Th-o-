@@ -1,6 +1,12 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
+import { api } from '@lib/api';
 import type { User } from '@/types';
+
+interface AuthResponse {
+  user: User;
+  token: string;
+}
 
 interface AuthState {
   user: User | null;
@@ -15,6 +21,7 @@ interface AuthState {
   register: (email: string, username: string, password: string) => Promise<void>;
   logout: () => void;
   updateUser: (data: Partial<User>) => void;
+  fetchUser: () => Promise<void>;
 }
 
 export const useAuthStore = create<AuthState>()(
@@ -32,18 +39,10 @@ export const useAuthStore = create<AuthState>()(
       login: async (email, password) => {
         set({ isLoading: true });
         try {
-          const response = await fetch('/api/auth/login', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email, password }),
+          const { user, token } = await api.post<AuthResponse>('/api/auth/login', {
+            email,
+            password,
           });
-
-          if (!response.ok) {
-            const error = await response.json();
-            throw new Error(error.message || 'Erreur de connexion');
-          }
-
-          const { user, token } = await response.json();
           set({ user, token, isAuthenticated: true, isLoading: false });
         } catch (error) {
           set({ isLoading: false });
@@ -54,18 +53,11 @@ export const useAuthStore = create<AuthState>()(
       register: async (email, username, password) => {
         set({ isLoading: true });
         try {
-          const response = await fetch('/api/auth/register', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email, username, password }),
+          const { user, token } = await api.post<AuthResponse>('/api/auth/register', {
+            email,
+            username,
+            password,
           });
-
-          if (!response.ok) {
-            const error = await response.json();
-            throw new Error(error.message || 'Erreur d\'inscription');
-          }
-
-          const { user, token } = await response.json();
           set({ user, token, isAuthenticated: true, isLoading: false });
         } catch (error) {
           set({ isLoading: false });
@@ -83,10 +75,26 @@ export const useAuthStore = create<AuthState>()(
           set({ user: { ...currentUser, ...data } });
         }
       },
+
+      fetchUser: async () => {
+        const token = get().token;
+        if (!token) return;
+
+        try {
+          const user = await api.get<User>('/api/auth/me', token);
+          set({ user, isAuthenticated: true });
+        } catch {
+          set({ user: null, token: null, isAuthenticated: false });
+        }
+      },
     }),
     {
       name: 'auth-storage',
-      partialize: (state) => ({ user: state.user, token: state.token, isAuthenticated: state.isAuthenticated }),
+      partialize: (state) => ({
+        user: state.user,
+        token: state.token,
+        isAuthenticated: state.isAuthenticated,
+      }),
     }
   )
 );

@@ -1,0 +1,26 @@
+services:
+  - type: web
+    name: blindtest-party-api
+    env: node
+    region: frankfurt
+    plan: free
+    buildCommand: npm install && npm run build
+    startCommand: npm run db:migrate:deploy && npm start
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL
+        sync: false
+      - key: JWT_SECRET
+        generateValue: true
+      - key: JWT_REFRESH_SECRET
+        generateValue: true
+      - key: CLIENT_URL
+        sync: false
+
+databases:
+  - name: blindtest-party-db
+    plan: free
+    databaseName: blindtest_party
+    user: blindtest
